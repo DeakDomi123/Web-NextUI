@@ -1,0 +1,20 @@
+.mqmodal {
+    min-width: 35rem;
+    max-height: 88vh;
+}
+
+.mqmodalbody {
+    overflow-y: auto;
+}
+
+@media (max-width: 700px) {
+    .mqmodal {
+        min-width: 20rem;
+    }
+}
+
+@media (max-height: 700px) {
+    .mqmodal {
+        max-height: 84vh;
+    }
+}

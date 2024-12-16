@@ -1,0 +1,19 @@
+.leaderboardmodal {
+    min-width: 35rem;
+}
+
+.leaderboardmodalbody {
+    overflow-y: auto;
+}
+
+@media (max-width: 700px) {
+    .leaderboardmodal {
+        min-width: 20rem;
+    }
+}
+
+@media (max-height: 700px) {
+    .leaderboardmodal {
+        max-height: 70vh;
+    }
+}

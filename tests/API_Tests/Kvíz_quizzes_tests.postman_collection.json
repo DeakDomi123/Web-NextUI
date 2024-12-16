@@ -1,0 +1,602 @@
+{
+	"info": {
+		"_postman_id": "0f38ec82-7bf5-4592-996a-aacf0bc66916",
+		"name": "Kvíz_quizzes_tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39957263",
+		"_collection_link": "https://szfm-kvzoldal-project.postman.co/workspace/SZFM-Kv%C3%ADzoldal-Project-Workspac~e7ac2511-75ef-4e7e-882a-829146daef98/collection/39957263-0f38ec82-7bf5-4592-996a-aacf0bc66916?action=share&source=collection_link&creator=39957263"
+	},
+	"item": [
+		{
+			"name": "List all records from quizzes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Lists all records',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/quizzes/records",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"quizzes",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating random dummy user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let date = Date.now();\r",
+							"date = date.toString()\r",
+							"let username = 'almafej'+ date\r",
+							"let email = 'almafej'+  date +'@gmail.com'\r",
+							"let id =  \"ts\"+date\r",
+							"pm.environment.set('email',email)\r",
+							"pm.environment.set('username',username)\r",
+							"pm.environment.set('id',id)\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Created sucsesfully',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\",\r\n    \"username\": \"{{username}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"emailVisibility\": true,\r\n    \"password\": \"almafej\",\r\n    \"passwordConfirm\": \"almafej\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login to get token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"var bodyToken = responseJson.token;\r",
+							"\r",
+							"pm.environment.set(\"token\",bodyToken)\r",
+							"pm.test('Login succes',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"identity\":\"{{email}}\",\r\n    \"password\":\"almafej\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/auth-with-password",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"auth-with-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating test quizz",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Created sucsesfully',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"id\":\"{{id}}\",\r\n    \"quiz_code\": \"tests\",\r\n    \"quiz_description\": \"testtesttesttesttest\",\r\n    \"number_of_questions\": 123,\r\n    \"category\": \"test\",\r\n    \"difficulty\": 2,\r\n    \"questions\": \"test\",\r\n    \"answers\": \"test\",\r\n    \"correct_answers\": \"test\",\r\n    \"card_color\": \"test\",\r\n    \"creator\": \"{{id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/quizzes/records",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"quizzes",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating quizz fail",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Create fail',function(){\r",
+							"    pm.response.to.have.status(400)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"id\":\"{{id}}\",\r\n    \"quiz_code\": \"tests\",\r\n    \"quiz_description\": \"testtesttesttesttest\",\r\n    \"number_of_questions\": 123,\r\n    \"category\": \"test\",\r\n    \"difficulty\": 2,\r\n    \"questions\": \"test\",\r\n    \"answers\": \"test\",\r\n    \"correct_answers\": \"test\",\r\n    \"card_color\": \"test\",\r\n    \"creator\": \"{{id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/quizzes/records",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"quizzes",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetching specific id quizzes record data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Fetch a specific id record',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/quizzes/records/{{id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"quizzes",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetching specific id with wrong id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Wrong id',function(){\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/quizzes/records/asd",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"quizzes",
+						"records",
+						"asd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updating quizz Succsess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Updating sucsesfully',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\",\r\n    \"quiz_code\": \"tests\",\r\n    \"quiz_description\": \"changed test description\",\r\n    \"number_of_questions\": 123,\r\n    \"category\": \"test\",\r\n    \"difficulty\": 2,\r\n    \"questions\": \"test\",\r\n    \"answers\": \"test\",\r\n    \"correct_answers\": \"test\",\r\n    \"card_color\": \"test\",\r\n    \"creator\": \"{{id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/quizzes/records/{{id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"quizzes",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updating quizz FAIL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Updating sucsesfully',function(){\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\",\r\n    \"quiz_code\": \"tests\",\r\n    \"quiz_description\": \"changed test description\",\r\n    \"number_of_questions\": 123,\r\n    \"category\": \"test\",\r\n    \"difficulty\": 2,\r\n    \"questions\": \"test\",\r\n    \"answers\": \"test\",\r\n    \"correct_answers\": \"test\",\r\n    \"card_color\": \"test\",\r\n    \"creator\": \"{{id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/quizzes/records/asd",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"quizzes",
+						"records",
+						"asd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleting test quizz succ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Delete succsessfull',function(){\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/quizzes/records/{{id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"quizzes",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete previously created dummy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Delete succsessfull',function(){\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records/{{id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

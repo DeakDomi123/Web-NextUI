@@ -1,0 +1,628 @@
+{
+	"info": {
+		"_postman_id": "6b62a14b-ba4a-4ec8-b049-a4054bfcd17f",
+		"name": "Kvíz_Users_tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39957263",
+		"_collection_link": "https://szfm-kvzoldal-project.postman.co/workspace/SZFM-Kv%C3%ADzoldal-Project-Workspac~e7ac2511-75ef-4e7e-882a-829146daef98/collection/39957263-6b62a14b-ba4a-4ec8-b049-a4054bfcd17f?action=share&source=collection_link&creator=39957263"
+	},
+	"item": [
+		{
+			"name": "Creating random user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let date = Date.now();\r",
+							"date = date.toString()\r",
+							"let username = 'almafej'+ date\r",
+							"let email = 'almafej'+  date +'@gmail.com'\r",
+							"let id =  \"ts\"+date\r",
+							"pm.environment.set('email',email)\r",
+							"pm.environment.set('username',username)\r",
+							"pm.environment.set('id',id)\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Created sucsesfully',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\",\r\n    \"username\": \"{{username}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"emailVisibility\": true,\r\n    \"password\": \"almafej\",\r\n    \"passwordConfirm\": \"almafej\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login to get token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"var bodyToken = responseJson.token;\r",
+							"\r",
+							"pm.environment.set(\"token\",bodyToken)\r",
+							"pm.test('Login succes',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"identity\":\"{{email}}\",\r\n    \"password\":\"almafej\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/auth-with-password",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"auth-with-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all records from users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('lists all user info',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bad id when pulling users data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('throws not found 404 code',function(){\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records/opkvctt6ap1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records",
+						"opkvctt6ap1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cannot create user with invalid email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Must be valid email',function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"Must be a valid email address.\");\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"email\": \"asd\",\r\n    \"emailVisibility\": true,\r\n    \"password\": \"almafej\",\r\n    \"passwordConfirm\": \"almafej\",\r\n    \"role\": true\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cannot create user no password",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let date = Date.now();\r",
+							"date = date.toString()\r",
+							"let username = 'almafej'+ date\r",
+							"let email = 'almafej'+  date +'@gmail.com'\r",
+							"pm.environment.set('email',email)\r",
+							"pm.environment.set('username',username)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Must send password',function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cannot be blank.\");\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"emailVisibility\": true,\r\n    \"passwordConfirm\": \"almafej\",\r\n    \"role\": true\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CAnnot create user passwords dont match",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let date = Date.now();\r",
+							"date = date.toString()\r",
+							"let username = 'almafej'+ date\r",
+							"let email = 'almafej'+  date +'@gmail.com'\r",
+							"pm.environment.set('email',email)\r",
+							"pm.environment.set('username',username)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Password values dont match',function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"Values don't match.\");\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"emailVisibility\": true,\r\n    \"password\": \"almaaaaaaa\",\r\n    \"passwordConfirm\": \"almafej\",\r\n    \"role\": true\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pulls specific id users data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('lists all user info',function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records/{{id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updating username",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let date = Date.now();\r",
+							"date = date.toString()\r",
+							"let username = 'almafej'+ date\r",
+							"pm.environment.set('username',username)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Updated Username',function(){\r",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get('username'));\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records/{{id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update with invalid id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('throws not found 404 code',function(){\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records/sda",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records",
+						"sda"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete previously created record succsessfull",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Delete succsessfull',function(){\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records/{{id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete wrong id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Delete unsucsessfull (wrong id)',function(){\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8090/api/collections/users/records/sda",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"collections",
+						"users",
+						"records",
+						"sda"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

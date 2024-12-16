@@ -1,0 +1,27 @@
+:root {
+  /* --background: #ffffff; */
+  --foreground: #171717;
+}
+
+html {
+  background-image: url('assets/images/background.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+body {
+  background-color: transparent !important;
+  /* color: var(--foreground); */
+  /* background: var(--background); */
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+h1{
+  text-align: center;
+}
+
+::-ms-reveal {
+  display: none;
+}

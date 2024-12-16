@@ -1,0 +1,104 @@
+:root {
+  --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+    "Source Han Sans CN", sans-serif;
+}
+
+.main-container {
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 68rem;
+  height: calc(100vh - 4.5rem);
+  margin: auto;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.quiz-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.secondary-container{
+  margin: auto;
+  margin-top: 0.25rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25rem;
+  width: 97%;
+  margin-bottom: 2rem;
+  /* flex-grow: 1; */
+}
+
+.quiz-card{
+  height: 18.5rem;
+}
+
+.quiz-description {
+  word-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #ffffff #a8a2a2;
+  scrollbar-width: thin;
+  height: 10rem;
+}
+
+.difficulty-chip-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1050px) {
+  .main-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 42.5rem;
+    margin: auto;
+  }
+  
+  .quiz-card{
+    width: 98%;
+  }
+
+  .secondary-container{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (min-width: 2000px) {
+  .main-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 75%;
+    margin: auto;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+  }
+
+  .secondary-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    scrollbar-width: thin;
+  }
+
+  .quiz-page-container {
+    display: block;
+  }
+}
+
+.quiz-card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

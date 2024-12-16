@@ -1,0 +1,3 @@
+## Jelenlegi üzleti folyamatok modellje
+A mai világban egyre elterjedtebbé válnak a klasszikustól eltérő módszerek alkalmazása az oktatás terén, melyek sokkal szórakoztatóbbá és interaktívabbá teszik az iskolai tanulmányokat. Fontos haladni ezekkel az újításokkal, mely például a papír alapú kvíz feladatsorok helyett jelentheti az online kvízek kitöltését a diákok okos eszközein.
+### [Back to README](/README.md)
