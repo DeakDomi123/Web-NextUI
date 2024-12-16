@@ -1,10 +1,4 @@
 .loginContainer {
-  /* background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  height: 100vh; */
-
   max-width: fit-content;
   margin-left: auto;
   margin-right: auto;
@@ -15,20 +9,7 @@
 
 .contentWrapper {
   display: flex;
-
-  /* flex-direction: column;
-  position: relative;
-  min-height: 100%;
-  width: 100%;
-  align-items: center; */
 }
-
-/* html {
-  background-image: url('@/app/assets/images/LoginBackground.png');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-} */
 
 
 .backgroundImage {
@@ -43,7 +24,6 @@
 .loginFormWrapper {
   position: relative;
   display: flex;
-  /* margin-bottom: -24px; */
   width: 460px;
   flex-direction: column;
 }
@@ -118,13 +98,6 @@
 }
 
 .inputField {
-  /* border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  color: #424242;
-  padding: 0 76px 13px 12px;
-  border: 1px solid #424242; */
   margin-bottom: 8px;
 }
 
@@ -213,15 +186,6 @@ margin-top: 8px;
 .submitButton {
   margin-top: 8px;
   margin-bottom: 8px;
-  /* border-radius: 8px;
-  display: flex;
-  max-width: 100%;
-  width: 380px;
-  flex-direction: column;
-  font-size: 14px;
-  color: #fff;
-  text-align: center;
-  line-height: 2; */
 }
 
 @media (max-width: 991px) {

@@ -1,6 +1,6 @@
 'use client';
 export default function Error() {
     return (
-        <p>error...</p>
+        <p>Hiba történt az oldal betöltése során.</p>
     );
 }

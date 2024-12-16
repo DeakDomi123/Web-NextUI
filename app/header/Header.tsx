@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 import { RivetIconsMagnifyingGlass, MdiPlus } from '../assets/SvgIcons';
 import { useAuth } from '../authentication/AuthContext';
@@ -12,7 +12,7 @@ import CreateQuizModal from '../Modals/CreateQuizModal';
 import avatarImages from '../assets/avatarImages';
 import { useRouter } from 'next/navigation';
 import {BackIcon} from "@/components/BackIcon";
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Select, SelectItem } from '@nextui-org/react';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { categoriesCap } from '../quiz/categories';
 import * as icons from '../assets/SvgIcons';
 
@@ -157,7 +157,7 @@ export default function Header({ quizMainHeaderMode, backButton }: { quizMainHea
               selectedKeys={selectedKeys}
               onSelectionChange={(x) => setSelectedKeys(x as Set<string>)}
             >
-              {[{ label: 'Összes kategória', icon: <div></div>}].concat(categoriesCap).map((cat) => (
+              {[{ label: 'Összes kategória', icon: <div/>}].concat(categoriesCap).map((cat) => (
                 <DropdownItem key={cat.label}>
                   <div style={{minHeight: '2rem'}} className={styles.catdropdowndiv}>
                     {cat.icon}
@@ -187,7 +187,7 @@ export default function Header({ quizMainHeaderMode, backButton }: { quizMainHea
               selectedKeys={selectedKeys2}
               onSelectionChange={(x) => setSelectedKeys2(x as Set<string>)}
             >
-              {[{ label: 'Összes nehézség', icon: <div></div>}].concat(difficulties).map((cat) => (
+              {[{ label: 'Összes nehézség', icon: <div/>}].concat(difficulties).map((cat) => (
                 <DropdownItem key={cat.label}>
                   <div style={{minHeight: '2rem'}} className={styles.catdropdowndivnofill}>
                     {cat.icon}
@@ -251,7 +251,3 @@ export default function Header({ quizMainHeaderMode, backButton }: { quizMainHea
     </header>
   );
 };
-
-function userRef<T>(arg0: null): [any, any] {
-  throw new Error('Function not implemented.');
-}

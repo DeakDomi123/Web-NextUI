@@ -1,6 +1,6 @@
 'use client';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import pb from '../authentication/PocketBaseClient';
 import avatarImages from '../assets/avatarImages';
 import Image from "next/image";

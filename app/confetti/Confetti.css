@@ -13,9 +13,6 @@
     left: 0;
     right: 0;
     display: flex;
-    /* width: 600px; */
-    /* height: 600px; */
-    /* overflow: hidden; */
   }
   
   .confetti .square {

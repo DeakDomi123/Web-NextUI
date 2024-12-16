@@ -13,8 +13,8 @@ import {
 import { useAuth } from "../authentication/AuthContext";
 import Image from "next/image";
 import avatarImages from '../assets/avatarImages';
-import { Bounce, toast, ToastContainer } from "react-toastify";
-import { toasterror, toastsuccess, toastwarn } from '../toasthelper';
+import { Bounce } from "react-toastify";
+import { toasterror, toastsuccess } from '../toasthelper';
 
 const predefinedImageKeys = [
   "avatar1",
@@ -89,9 +89,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ isOpen, onClose }) 
     }
   };
 
+  const resetName = () => {
+    setUsername(user?.username || "");
+    onClose();
+  }
+
   return (
     <div className="modal-wrapper">
-      <Modal isOpen={isOpen} onClose={onClose} backdrop="opaque">
+      <Modal isOpen={isOpen} onClose={resetName} backdrop="opaque">
         <ModalContent>
           <form onSubmit={handleSubmit}>
             <ModalHeader>Profil Szerkesztése</ModalHeader>
@@ -154,18 +159,6 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ isOpen, onClose }) 
           </form>
         </ModalContent>
       </Modal>
-      {/* <ToastContainer stacked limit={5}
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          /> */}
     </div>
   );
 };

@@ -14,17 +14,13 @@ import {
   Divider,
   Input,
   Tooltip,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem
 } from '@nextui-org/react';
 import { useAuth } from '../authentication/AuthContext';
 import pb from '../authentication/PocketBaseClient';
 import * as icons from '../assets/SvgIcons';
 import styles from './CreateQuizModal.module.css';
 import { MdiPlus } from '../assets/SvgIcons';
-import { Bounce, toast, ToastContainer } from 'react-toastify';
+import { Bounce } from 'react-toastify';
 import { toasterror, toastsuccess, toastwarn } from '../toasthelper';
 import './MyQuizzesModal.css';
 

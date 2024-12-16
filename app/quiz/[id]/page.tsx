@@ -3,10 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/app/authentication/AuthContext';
-import * as icons from '@/app/assets/SvgIcons';
 import pb from '@/app/authentication/PocketBaseClient';
-import { categories } from '../categories';
-import headerStyles from '@app/header/Header.module.css';
 import Header from '@/app/header/Header';
 import { Card, CardBody, CardHeader } from '@nextui-org/react';
 import './quizidpage.css';
@@ -266,8 +263,7 @@ export default function QuizPage({ params }: { params: {id: string }} ){
     {!quizFinished &&
     <div className='outer-content-div'>
       <div className='content-div'>
-        <div className='side-col'>
-        </div>
+        <div className='side-col' />
         <div className='center-col'>
           <Card className='main-card'>
             <CardBody>

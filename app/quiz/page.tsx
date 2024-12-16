@@ -6,7 +6,6 @@ import './quizpage.css';
 import Header from "../header/Header";
 import pb from '../authentication/PocketBaseClient';
 import { Button, Card, CardBody, CardFooter, CardHeader, Chip, Divider, Pagination } from "@nextui-org/react";
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { categories } from './categories';
 import LeaderBoardModal from '@/app/Modals/LeaderBoardModal'
@@ -31,7 +30,7 @@ export default function QuizPage() {
     <>
       <Header quizMainHeaderMode={true} backButton={null} />
       <div className='main-container'>
-        <Suspense fallback={<div><h1><p></p></h1></div>}>
+        <Suspense fallback={<div><h1><p/></h1></div>}>
           <QuizContent user={user} />
         </Suspense>
       </div>
@@ -101,7 +100,7 @@ function QuizContent({ user }: QuizContentProps) {
     }
   }, [user, currentPage, searchQuery, catQuery, diffQuery]);
 
-  if (quizLoading) return (<div><h1><p></p></h1></div>);
+  if (quizLoading) return (<div><h1><p/></h1></div>);
 
   if (!user) return null;
 

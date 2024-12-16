@@ -20,10 +20,9 @@ import { MdiPlus } from '../assets/SvgIcons';
 import styles from './CreateQuizModal.module.css';
 import * as icons from '../assets/SvgIcons';
 
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { Bounce } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { Toast } from 'react-toastify/dist/components/Toast';
 import { toasterror, toastsuccess, toastwarn } from '../toasthelper';
 
 
@@ -229,7 +228,7 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose }) =>
         creator: user?.id || '',
       };
 
-      const createdQuiz = await pb.collection('quizzes').create(quizData);
+      await pb.collection('quizzes').create(quizData);
 
       //alert('Kvíz sikeresen létrehozva! Adminisztrátor jóváhagyásra vár.');
       toastsuccess("Kvíz sikeresen létrehozva! Adminisztrátor jóváhagyásra vár.",SuccesOptions)

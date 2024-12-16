@@ -12,7 +12,7 @@ export const categories = [
     { label: 'film', icon: <icons.BxCameraMovieWhite /> },
     { label: 'zene', icon: <icons.MdiMusicWhite /> },
     { label: 'könyvek', icon: <icons.MaterialSymbolsBookOutlineWhite /> },
-    // { label: 'játékok', icon: <icons.IonGameControllerOutlineWhite /> },
+    { label: 'játékok', icon: <icons.IonGameControllerOutlineWhite /> },
     { label: 'egyéb', icon: <icons.BasilOther1OutlineWhite /> },
   ];
 
@@ -27,6 +27,6 @@ export const categories = [
     { label: 'Film', icon: <icons.BxCameraMovieWhite /> },
     { label: 'Zene', icon: <icons.MdiMusicWhite /> },
     { label: 'Könyvek', icon: <icons.MaterialSymbolsBookOutlineWhite /> },
-    // { label: 'játékok', icon: <icons.IonGameControllerOutlineWhite /> },
+    { label: 'játékok', icon: <icons.IonGameControllerOutlineWhite /> },
     { label: 'Egyéb', icon: <icons.BasilOther1OutlineWhite /> },
   ];
