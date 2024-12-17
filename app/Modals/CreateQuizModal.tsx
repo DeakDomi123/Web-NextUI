@@ -18,7 +18,8 @@ import { useAuth } from '../authentication/AuthContext';
 import pb from '../authentication/PocketBaseClient';
 import { MdiPlus } from '../assets/SvgIcons';
 import styles from './CreateQuizModal.module.css';
-import * as icons from '../assets/SvgIcons';
+import { categories } from '../quiz/categories';
+import { difficulties } from '../quiz/difficulties';
 
 import { Bounce } from 'react-toastify';
 
@@ -49,26 +50,6 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose }) =>
     setAnswers([]);
     setCorrectAnswer([]);
   };
-
-  const categories = [
-    { label: 'matematika', icon: <icons.MynauiMathSolid /> },
-    { label: 'tudomány', icon: <icons.MdiFlask /> },
-    { label: 'művészet', icon: <icons.MdiArt /> },
-    { label: 'sport', icon: <icons.FluentSport16Regular /> },
-    { label: 'technológia', icon: <icons.GridiconsPhone /> },
-    { label: 'utazás', icon: <icons.FaPlane /> },
-    { label: 'videók', icon: <icons.RiMovieLine /> },
-    { label: 'film', icon: <icons.BxCameraMovie /> },
-    { label: 'zene', icon: <icons.MdiMusic /> },
-    { label: 'könyvek', icon: <icons.MaterialSymbolsBookOutline /> },
-    { label: 'egyéb', icon: <icons.BasilOther1Outline /> },
-  ];
-
-  const difficulties = [
-    { label: 'Könnyű', icon: <icons.MynauiSquareSolid /> },
-    { label: 'Közepes', icon: <icons.MynauiSquareSolid2 /> },
-    { label: 'Nehéz', icon: <icons.MynauiSquareSolid3 /> },
-  ];
 
   const generateQuizCode = () => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -127,6 +108,7 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose }) =>
     transition: Bounce,
 
   }
+  
   const SuccesOptions = {
     autoClose: 3000,
     hideProgressBar: false,
@@ -138,6 +120,7 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose }) =>
     theme: "colored",
     transition: Bounce,
   }
+
   const ErrorOptions = {
     autoClose: 3000,
     hideProgressBar: false,
@@ -149,9 +132,6 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose }) =>
     theme: "colored",
     transition: Bounce,
   }
-  
-  
-  
 
   const handleSubmit = async () => {
     const combinedQuestions = questions.map((question, index) => ({
@@ -161,8 +141,6 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose }) =>
     }));
 
     if (!quizDescription || !category || !difficulty) {
-      //alert('Kérjük, töltsd ki az összes kötelező mezőt.');
-      
        toastwarn("Kérjük, töltsd ki az összes kötelező mezőt.",WarningOptions)
        return;
     }
@@ -186,25 +164,22 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose }) =>
       const q = combinedQuestions[i];
       let numberOfQuestions = i+1;
       if (!q.question_text || !q.answers || !q.correct_answer) {
-        //alert(`Kérjük, töltsd ki az összes mezőt a(z) ${i + 1}. kérdéshez.`);
         toastwarn( "Kérjük, töltsd ki az összes mezőt a(z) "  + numberOfQuestions +". kérdéshez.",WarningOptions)
         return;
       }
 
       const answersArray = q.answers.split(';').map(ans => ans.trim());
       if (answersArray.length < 1 || answersArray.length > 4) {
-        //alert(`A(z) ${i + 1}. kérdéshez 1 és 4 közötti válaszlehetőséget kell megadnod.`);
         toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez 1 és 4 közötti válaszlehetőséget kell megadni.",WarningOptions)
         return;
       }
       if (!answersArray.includes(q.correct_answer.trim())) {
-        //alert(`A(z) ${i + 1}. kérdéshez megadott helyes válasz nem szerepel a válaszok között.`);
         toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez megadott helyes válasz nem szerepel a válaszok között.",WarningOptions)
         return;
       }
       const correctAnswersCount = answersArray.filter(ans => ans === q.correct_answer.trim()).length;
       if (correctAnswersCount !== 1) {
-        //alert(`A(z) ${i + 1}. kérdéshez pontosan egy helyes választ kell megadni.`);
+
         toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez pontosan egy helyes választ kell megadni.",WarningOptions)
         return;
       }
@@ -229,14 +204,11 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose }) =>
       };
 
       await pb.collection('quizzes').create(quizData);
-
-      //alert('Kvíz sikeresen létrehozva! Adminisztrátor jóváhagyásra vár.');
       toastsuccess("Kvíz sikeresen létrehozva! Adminisztrátor jóváhagyásra vár.",SuccesOptions)
       clearQuiz();
       onClose();
     } catch (error) {
       console.error('Kvíz létrehozási hiba:', error);
-      //alert('Hiba történt a kvíz létrehozása során.');
       toasterror("Hiba történt a kvíz létrehozása során.",ErrorOptions)
     } finally {
       setIsSubmitting(false);

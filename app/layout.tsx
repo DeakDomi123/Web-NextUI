@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { AuthProvider } from './authentication/AuthContext';
+import { ProfileImageProvider } from "./contexts/ProfileImageContext";
 import './globals.css';
 import { Providers } from "./providers";
 import { fontSans } from "@/config/fonts";
@@ -21,7 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light", forcedTheme: "light" }}>
           <AuthProvider>
-            {children}
+            <ProfileImageProvider>
+              {children}
+            </ProfileImageProvider>
           </AuthProvider>
         </Providers>
       </body>

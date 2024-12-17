@@ -16,17 +16,17 @@ export const categories = [
     { label: 'egyéb', icon: <icons.BasilOther1OutlineWhite /> },
   ];
 
-  export const categoriesCap = [
-    { label: 'Matematika', icon: <icons.MynauiMathSolidWhite /> },
-    { label: 'Tudomány', icon: <icons.MdiFlaskWhite /> },
-    { label: 'Művészet', icon: <icons.MdiArtWhite /> },
-    { label: 'Sport', icon: <icons.FluentSport16RegularWhite /> },
-    { label: 'Technológia', icon: <icons.GridiconsPhoneWhite /> },
-    { label: 'Utazás', icon: <icons.FaPlaneWhite /> },
-    { label: 'Videók', icon: <icons.RiMovieLineWhite /> },
-    { label: 'Film', icon: <icons.BxCameraMovieWhite /> },
-    { label: 'Zene', icon: <icons.MdiMusicWhite /> },
-    { label: 'Könyvek', icon: <icons.MaterialSymbolsBookOutlineWhite /> },
-    { label: 'játékok', icon: <icons.IonGameControllerOutlineWhite /> },
-    { label: 'Egyéb', icon: <icons.BasilOther1OutlineWhite /> },
+  export const categoriesBlack = [
+    { label: 'matematika', icon: <icons.MynauiMathSolid /> },
+    { label: 'tudomány', icon: <icons.MdiFlask /> },
+    { label: 'művészet', icon: <icons.MdiArt /> },
+    { label: 'sport', icon: <icons.FluentSport16Regular /> },
+    { label: 'technológia', icon: <icons.GridiconsPhone /> },
+    { label: 'utazás', icon: <icons.FaPlane /> },
+    { label: 'videók', icon: <icons.RiMovieLine /> },
+    { label: 'film', icon: <icons.BxCameraMovie /> },
+    { label: 'zene', icon: <icons.MdiMusic /> },
+    { label: 'könyvek', icon: <icons.MaterialSymbolsBookOutline /> },
+    { label: 'játékok', icon: <icons.IonGameControllerOutline /> },
+    { label: 'egyéb', icon: <icons.BasilOther1Outline /> },
   ];

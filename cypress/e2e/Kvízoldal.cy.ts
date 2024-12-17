@@ -1,6 +1,6 @@
 describe('Kvízoldal tests', () => {
   //###################################################################################
-  let user = "almafej87" //REVRITE THIS BEFORE TEST
+  let user = "almafej87" //REWRITE THIS BEFORE TEST
 
   it('Reaches Website', () => {
     

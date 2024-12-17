@@ -225,7 +225,6 @@ export default function QuizPage({ params }: { params: {id: string }} ){
       },
       () => {
         submitAnswer(null);
-        // alert("timer out");
       });
   }
       

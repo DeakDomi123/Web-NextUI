@@ -71,15 +71,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const updateProfile = async (updates: { username?: string; profile_picture?: string }) => {
     if (!user) throw new Error('Nincs bejelentkezett felhasználó');
-
     try {
       const updatedData: any = {};
-      if (updates.username) {
+      if (updates.username) 
         updatedData.username = updates.username;
-      }
-      if (updates.profile_picture) {
+      if (updates.profile_picture)
         updatedData.profile_picture = updates.profile_picture;
-      }
       const updatedUser = await pb.collection('users').update(user.id, updatedData);
       setUser(updatedUser as unknown as User);
     } catch (error) {

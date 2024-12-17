@@ -23,6 +23,8 @@ import { MdiPlus } from '../assets/SvgIcons';
 import { Bounce } from 'react-toastify';
 import { toasterror, toastsuccess, toastwarn } from '../toasthelper';
 import './MyQuizzesModal.css';
+import { difficulties } from '../quiz/difficulties';
+import { categoriesBlack as categories } from '../quiz/categories';
 
 interface Quiz {
   id: string;
@@ -59,28 +61,6 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
   const [filteredQuizzes, setFilteredQuizzes] = useState<Quiz[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [verifiedQuizIds, setVerifiedQuizIds] = useState<string[]>([]);
-
-
-  const categories = [
-    { label: 'matematika', icon: <icons.MynauiMathSolid /> },
-    { label: 'tudomány', icon: <icons.MdiFlask /> },
-    { label: 'művészet', icon: <icons.MdiArt /> },
-    { label: 'sport', icon: <icons.FluentSport16Regular /> },
-    { label: 'technológia', icon: <icons.GridiconsPhone /> },
-    { label: 'utazás', icon: <icons.FaPlane /> },
-    { label: 'videók', icon: <icons.RiMovieLine /> },
-    { label: 'film', icon: <icons.BxCameraMovie /> },
-    { label: 'zene', icon: <icons.MdiMusic /> },
-    { label: 'könyvek', icon: <icons.MaterialSymbolsBookOutline /> },
-    { label: 'játékok', icon: <icons.IonGameControllerOutline /> },
-    { label: 'egyéb', icon: <icons.BasilOther1Outline /> },
-  ];
-
-  const difficulties = [
-    { label: 'Könnyű', icon: <icons.MynauiSquareSolid /> },
-    { label: 'Közepes', icon: <icons.MynauiSquareSolid2 /> },
-    { label: 'Nehéz', icon: <icons.MynauiSquareSolid3 /> },
-  ];
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -176,7 +156,6 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       setVerifiedQuizIds((prev) => [...prev, quizId]);
     } catch (error) {
       console.error('Verify error:', error);
-      //alert('Hiba történt a kvíz hitelesítésekor.');
       toasterror("Hiba történt a kvíz hitelesítésekor.",ErrorOptions)
     }
   };
@@ -190,7 +169,6 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       setVerifiedQuizIds((prev) => prev.filter((id) => id !== quizId));
     } catch (error) {
       console.error('Unverify error:', error);
-      //alert('Hiba történt a kvíz hitelesítésének visszavonásakor.');
       toasterror("Hiba történt a kvíz hitelesítésének visszavonásakor.",ErrorOptions)
     }
   };
@@ -225,8 +203,7 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleEditSubmit = async () => {
-    if (!editingQuiz || !category || !difficulty) {
-      //alert('Kérjük, töltsd ki az összes mezőt!');
+    if (!editingQuiz || !category || !difficulty) {;
       toastwarn("Kérjük, töltsd ki az összes kötelező mezőt.",WarningOptions)
 
       return;
@@ -236,18 +213,15 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       const answerArray = answers[i].split(';').map(ans => ans.trim());
       let numberOfQuestions = i+1;
       if (answerArray.length < 1 || answerArray.length > 4) {
-        //alert(`A(z) ${i + 1}. kérdéshez 1 és 4 közötti válaszlehetőséget kell megadnod.`);
         toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez 1 és 4 közötti válaszlehetőséget kell megadnod.",WarningOptions)
         return;
       }
       if (!answerArray.includes(correctAnswers[i].trim())) {
-        //alert(`A(z) ${i + 1}. kérdéshez megadott helyes válasz nem szerepel a válaszok között.`);
         toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez megadott helyes válasz nem szerepel a válaszok között.",WarningOptions)
         return;
       }
       const correctAnswersCount = answerArray.filter(ans => ans === correctAnswers[i].trim()).length;
       if (correctAnswersCount !== 1) {
-        //alert(`A(z) ${i + 1}. kérdéshez pontosan egy helyes választ kell megadni.`);
         toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez pontosan egy helyes választ kell megadni.",WarningOptions)
         return;
       }
@@ -272,11 +246,9 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       handleUnverifyQuiz(editingQuiz.id);
       setHasModified(true);
       setEditingQuiz(null);
-      //alert('Kvíz sikeresen frissítve! Adminisztrátor jóváhagyásra vár.');
       toastsuccess("Kvíz sikeresen frissítve! Adminisztrátor jóváhagyásra vár.",SuccesOptions)
     } catch (error) {
       console.error('Update quiz error:', error);
-      //alert('Hiba történt a kvíz frissítésekor.');
       toasterror("Hiba történt a kvíz frissítésekor.",ErrorOptions)
 
     }
@@ -316,11 +288,9 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       await pb.collection('quizzes').delete(quizId);
       setHasModified(true);
       setQuizzes(quizzes.filter((quiz) => quiz.id !== quizId));
-      //alert('Kvíz sikeresen törölve!');
       toastsuccess("Kvíz sikeresen törölve!",SuccesOptions)
     } catch (error) {
       console.error('Delete quiz error:', error);
-      //alert('Hiba történt a kvíz törlésekor.');
       toasterror("Hiba történt a kvíz törlésekor.",ErrorOptions)
     }
   };
@@ -621,19 +591,6 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
             </ModalFooter>
           </ModalContent>
         </Modal>
-
-        {/* <ToastContainer stacked limit={5}
-              position="top-center"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="colored"
-              /> */}
       </div>
     </>
   );
