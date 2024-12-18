@@ -98,7 +98,7 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
     else if ("j".includes(searchTerm.toLowerCase())) {
       // Szűrés hitelesített kvízekre
       setFilteredQuizzes(quizzes.filter((quiz) => verifiedQuizIds.includes(quiz.id)));
-    } 
+    }
     else {
       const searchLower = searchTerm.toLowerCase();
       setFilteredQuizzes(
@@ -112,7 +112,7 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
     }
   }, [searchTerm, quizzes, verifiedQuizIds]);
 
-  const WarningOptions= {
+  const WarningOptions = {
     //position: "top-center", 
     autoClose: 3000,
     hideProgressBar: false,
@@ -125,6 +125,7 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
     transition: Bounce,
 
   }
+
   const SuccesOptions = {
     autoClose: 3000,
     hideProgressBar: false,
@@ -136,6 +137,7 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
     toastId: "myquizzesmodal_success_toast",
     transition: Bounce,
   }
+  
   const ErrorOptions = {
     autoClose: 3000,
     hideProgressBar: false,
@@ -154,9 +156,10 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       await pb.collection('verifiedQuizzes').create({ quiz_id: quizId });
       setHasModified(true);
       setVerifiedQuizIds((prev) => [...prev, quizId]);
+      toastsuccess("Kvíz sikeresen hitelesítve!", SuccesOptions)
     } catch (error) {
       console.error('Verify error:', error);
-      toasterror("Hiba történt a kvíz hitelesítésekor.",ErrorOptions)
+      toasterror("Hiba történt a kvíz hitelesítésekor.", ErrorOptions)
     }
   };
 
@@ -167,9 +170,10 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       await pb.collection('verifiedQuizzes').delete(record.id);
       setHasModified(true);
       setVerifiedQuizIds((prev) => prev.filter((id) => id !== quizId));
+      toastsuccess("Kvíz hitelesítése sikeresen visszavonva!", SuccesOptions)
     } catch (error) {
       console.error('Unverify error:', error);
-      toasterror("Hiba történt a kvíz hitelesítésének visszavonásakor.",ErrorOptions)
+      toasterror("Hiba történt a kvíz hitelesítésének visszavonásakor.", ErrorOptions)
     }
   };
 
@@ -203,26 +207,35 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleEditSubmit = async () => {
-    if (!editingQuiz || !category || !difficulty) {;
-      toastwarn("Kérjük, töltsd ki az összes kötelező mezőt.",WarningOptions)
+    if (!editingQuiz || !category || !difficulty || !quizDescription) {
+      toastwarn("Kérjük, töltsd ki az összes kötelező mezőt.", WarningOptions);
+      return;
+    }
 
+    if (quizDescription.length < 10) {
+      toastwarn("A kvíz leírása minimum 10 karakter hosszú.", WarningOptions)
+      return;
+    }
+
+    if (quizDescription.length > 400) {
+      toastwarn("A kvíz leírása maximum 400 karakter hosszú.", WarningOptions)
       return;
     }
 
     for (let i = 0; i < questions.length; i++) {
       const answerArray = answers[i].split(';').map(ans => ans.trim());
-      let numberOfQuestions = i+1;
+      let numberOfQuestions = i + 1;
       if (answerArray.length < 1 || answerArray.length > 4) {
-        toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez 1 és 4 közötti válaszlehetőséget kell megadnod.",WarningOptions)
+        toastwarn("A(z) " + numberOfQuestions + ". kérdéshez 1 és 4 közötti válaszlehetőséget kell megadnod.", WarningOptions);
         return;
       }
       if (!answerArray.includes(correctAnswers[i].trim())) {
-        toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez megadott helyes válasz nem szerepel a válaszok között.",WarningOptions)
+        toastwarn("A(z) " + numberOfQuestions + ". kérdéshez megadott helyes válasz nem szerepel a válaszok között.", WarningOptions);
         return;
       }
       const correctAnswersCount = answerArray.filter(ans => ans === correctAnswers[i].trim()).length;
       if (correctAnswersCount !== 1) {
-        toastwarn( "A(z) "  + numberOfQuestions +". kérdéshez pontosan egy helyes választ kell megadni.",WarningOptions)
+        toastwarn("A(z) " + numberOfQuestions + ". kérdéshez pontosan egy helyes választ kell megadni.", WarningOptions);
         return;
       }
     }
@@ -246,11 +259,10 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       handleUnverifyQuiz(editingQuiz.id);
       setHasModified(true);
       setEditingQuiz(null);
-      toastsuccess("Kvíz sikeresen frissítve! Adminisztrátor jóváhagyásra vár.",SuccesOptions)
+      toastsuccess("Kvíz sikeresen frissítve! Adminisztrátor jóváhagyásra vár.", SuccesOptions)
     } catch (error) {
       console.error('Update quiz error:', error);
-      toasterror("Hiba történt a kvíz frissítésekor.",ErrorOptions)
-
+      toasterror("Hiba történt a kvíz frissítésekor.", ErrorOptions)
     }
   };
 
@@ -288,10 +300,10 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
       await pb.collection('quizzes').delete(quizId);
       setHasModified(true);
       setQuizzes(quizzes.filter((quiz) => quiz.id !== quizId));
-      toastsuccess("Kvíz sikeresen törölve!",SuccesOptions)
+      toastsuccess("Kvíz sikeresen törölve!", SuccesOptions)
     } catch (error) {
       console.error('Delete quiz error:', error);
-      toasterror("Hiba történt a kvíz törlésekor.",ErrorOptions)
+      toasterror("Hiba történt a kvíz törlésekor.", ErrorOptions)
     }
   };
 
@@ -369,8 +381,8 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
         )}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
           <strong>Státusz:</strong>
-          {isVerified ? <Tooltip content="Hitelesített" color={"success"}><Button style={{ background: 'transparent', padding: 0, display: 'inline', minWidth: 0 }} disabled={true}><icons.Accept /></Button></Tooltip> 
-          : <Tooltip content="Nem elfogadott/Jóváhagyásra vár" key={"danger"} color={"danger"}><Button style={{ background: 'transparent', padding: 0, display: 'inline', minWidth: 0 }} disabled={true}><icons.Deny /></Button></Tooltip>}
+          {isVerified ? <Tooltip content="Hitelesített" color={"success"}><Button style={{ background: 'transparent', padding: 0, display: 'inline', minWidth: 0 }} disabled={true}><icons.Accept /></Button></Tooltip>
+            : <Tooltip content="Nem elfogadott/Jóváhagyásra vár" key={"danger"} color={"danger"}><Button style={{ background: 'transparent', padding: 0, display: 'inline', minWidth: 0 }} disabled={true}><icons.Deny /></Button></Tooltip>}
         </div>
       </div>
     );
@@ -537,8 +549,8 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
         <Modal className='mqmodal' isOpen={isOpen} onClose={handleModalClose} closeButton style={{ top: '1.5rem', position: 'absolute' }}>
           <ModalContent>
             <ModalHeader style={{ marginRight: '.4rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{marginRight: '.4rem'}}>Kvízek</span>
-              <div className={styles.inputContainer} style={{flexGrow: 1}}>
+              <span style={{ marginRight: '.4rem' }}>Kvízek</span>
+              <div className={styles.inputContainer} style={{ flexGrow: 1 }}>
                 <input
                   key="default"
                   type="text"
@@ -547,7 +559,7 @@ const MyQuizzesModal: React.FC<MyQuizzesModalProps> = ({ isOpen, onClose }) => {
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                 />
-                <icons.RivetIconsMagnifyingGlass style={{margin: '4 4 4 4', width: '1.4rem', paddingBottom: '.5rem'}} className={styles.icon} />
+                <icons.RivetIconsMagnifyingGlass style={{ margin: '4 4 4 4', width: '1.4rem', paddingBottom: '.5rem' }} className={styles.icon} />
               </div>
 
             </ModalHeader>

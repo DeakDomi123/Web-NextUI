@@ -1,15 +1,40 @@
 
-# SZFM Kvízoldal Project
+# Kvízoldal Project
 
-## Projekt indítása
+# Már létező belépési adatok:
 
-Elszőr, futtasd a webszervert:
+## PocketBase admin felület belépési adatai:
+admin@gmail.com
+admin12345
+
+## A kvízoldalon az admin fiók belépés adatai:
+admin@gmail.com
+admin12345
+
+## A kvízoldalon egy user fiók belépési adatai:
+asd@gmail.com
+asd12345
+
+## Projekt indítása Visual Studio Code esetén
+
+Futtatás:
+
+Terminal --> New Terminal
 
 ```bash
+npm install #(ha szükséges)
 npm run build
 npm start
 ```
-Nyisd meg a [http://localhost:3000](http://localhost:3000) a böngésződben.
+
+### vagy
+
+```bash
+#developer módban
+npm install #(ha szükséges)
+npm run dev
+```
+Nyisd meg a [http://localhost:3000](http://localhost:3000) címet a böngésződben.
 
 
 Majd futtatsd a Pocketbase-t az alábbi paranccsal
@@ -17,7 +42,7 @@ Majd futtatsd a Pocketbase-t az alábbi paranccsal
 .\pocketbase serve
 ```
 
-Nyisd meg a böngésződben a pocketbase admin UI-t
+A pocketbase admin UI címe
 [http://127.0.0.1:8090/_/](http://127.0.0.1:8090/_/)
 
 # Dokumentáció
@@ -55,6 +80,9 @@ elérhető az összes felhasználói funkció. A kvízek kategóriák szerint va
 - [PlantUML kód és ábra](/documentation/PlantUml.md)
 
 ## Authors
-
 - [@Szehljánik Péter](https://www.github.com/SzPeti8)
 - [@Deák Dominik Kornél](https://github.com/DeakDomi123)
+
+
+## Github
+- [Github link](https://github.com/DeakDomi123/Web-NextUI)

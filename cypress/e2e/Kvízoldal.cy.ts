@@ -1,6 +1,6 @@
 describe('Kvízoldal tests', () => {
   //###################################################################################
-  let user = "almafej87" //REWRITE THIS BEFORE TEST
+  let user = "almafej4" //REWRITE THIS BEFORE TEST
 
   it('Reaches Website', () => {
     
@@ -53,7 +53,7 @@ describe('Kvízoldal tests', () => {
     cy.get('.Header_catdropdowndiv2___B88f').click({ force: true })
     cy.wait(1000)
     
-    cy.get('.z-10 > .gap-1').contains("Matematika").click({ force: true })
+    cy.get('.z-10 > .gap-1').contains("matematika").click({ force: true })
     cy.wait(1000)
   })
   it("Sort by Difficulty",()=>{
@@ -112,8 +112,6 @@ describe('Kvízoldal tests', () => {
     cy.get('.gap-4 > :nth-child(3)').click({ force: true })
     cy.get('.flex-wrap > :nth-child(2) > .rounded-full').click({ force: true,multiple:true })
     cy.get('.relative > .inline-flex').type(user)
-    cy.wait(1000)
-    cy.get('.flex-row > .bg-primary').click({ force: true })
     cy.wait(1000)
   })
   it("Edit Quizz",()=>{

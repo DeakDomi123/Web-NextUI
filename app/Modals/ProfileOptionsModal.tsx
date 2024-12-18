@@ -5,9 +5,6 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Divid
 import { useAuth } from '../authentication/AuthContext';
 import { useProfileImage } from '../contexts/ProfileImageContext';
 import Image from "next/image";
-import { Bounce } from "react-toastify";
-import { toasterror } from '../toasthelper';
-
 interface ProfileOptionsModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -18,18 +15,6 @@ const ProfileOptionsModal: React.FC<ProfileOptionsModalProps> = ({ isOpen, onClo
   const { user, logout } = useAuth();
   const { getUserAvatarUrl } = useProfileImage();
   const [avatarUrl, setAvatarUrl] = useState<string>('');
-
-  const ErrorOptions = {
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-    toastId: "uploadimagemodal_error_toast",
-    transition: Bounce,
-  };
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -47,12 +32,7 @@ const ProfileOptionsModal: React.FC<ProfileOptionsModalProps> = ({ isOpen, onClo
   };
 
   const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error('Kijelentkezési hiba:', error);
-      toasterror('Hiba történt a kijelentkezés során.', ErrorOptions);
-    }
+    await logout();
     onClose();
   };
 

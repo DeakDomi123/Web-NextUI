@@ -76,6 +76,11 @@ const UploadImageModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     transition: Bounce,
   };
 
+  const onBeforeClose = () => {
+    setFile(null);
+    onClose();
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
@@ -127,7 +132,7 @@ const UploadImageModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
       setTimeout(() => {
         router.refresh();
       }, 3000);
-      onClose();
+      onBeforeClose();
     } catch (error) {
       console.error(error);
       toasterror("Hiba történt a feltöltés során.", ErrorOptions);
@@ -156,7 +161,7 @@ const UploadImageModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         setTimeout(() => {
           router.refresh();
         }, 3000);
-        onClose();
+        onBeforeClose();
       } else {
         toastwarn("Nincs törölhető kép.", WarnOptions);
       }
@@ -169,7 +174,7 @@ const UploadImageModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} backdrop="opaque">
+    <Modal isOpen={isOpen} onClose={onBeforeClose} backdrop="opaque">
       <ModalContent>
         <ModalHeader>Kép feltöltése (max. 5 MB)</ModalHeader>
         <ModalBody>
@@ -208,7 +213,7 @@ const UploadImageModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
           </Button>
           <Button
             color="secondary"
-            onPress={onClose}
+            onPress={onBeforeClose}
             disabled={isSubmitting}
             variant="light"
           >

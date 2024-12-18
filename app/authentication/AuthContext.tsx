@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(updatedUser as unknown as User);
     } catch (error) {
       console.error('Profil frissítési hiba:', error);
-      throw new Error('Hiba történt a profil frissítésekor');
+      throw new Error('Hiba történt a profil frissítésekor. Lehet létezik már azonos névvvel felhasználó.');
     }
   };
 

@@ -42,10 +42,9 @@ const LoginPage: React.FC = () => {
         emailInputElement.current?.focus(); 
         return;
       }
-
       await login(email, password);
-    } catch {
-      setError('Hiba történt a bejelentkezés során.');
+    } catch (error: any){
+      setError(error.message);
     } finally {
       setLoading(false);
     }

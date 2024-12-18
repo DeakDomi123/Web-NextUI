@@ -102,9 +102,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ isOpen, onClose }) 
       toastsuccess("Sikeres szerkesztés", SuccesOptions);
       await loadCustomImage();
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Profil szerkesztési hiba:", error);
-      toasterror("Hiba történt a profil szerkesztésekor.", ErrorOptions);
+      toasterror(error.message, ErrorOptions);
     } finally {
       setIsSubmitting(false);
     }
